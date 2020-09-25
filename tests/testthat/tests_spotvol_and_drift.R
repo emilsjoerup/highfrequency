@@ -1,5 +1,5 @@
-library(highfrequency)
-library(testthat)
+library("highfrequency")
+library("testthat")
 
 
 context("spotDrift")

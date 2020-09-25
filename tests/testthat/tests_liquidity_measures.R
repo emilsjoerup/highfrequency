@@ -1,5 +1,5 @@
-library(testthat)
-library(highfrequency)
+library("testthat")
+library("highfrequency")
 context("matchTradesQuotes & getTradeDirection trades")
 test_that("matchTradesQuotes & getTradeDirection trades", {
 expect_equal(

@@ -1,7 +1,7 @@
-library(testthat)
-library(highfrequency)
+library("testthat")
+library("highfrequency")
 context("medRV")
-test_that("", {
+test_that("medRV", {
   expect_equal(
     formatC(as.numeric(medRV(sample5MinPricesJumps[c('2010-01-04', '2010-01-05'), 1], alignBy = "minutes", alignPeriod = 5, makeReturns = TRUE)[1]), digits = 5),
     "0.013105"

@@ -1,4 +1,5 @@
-library(xts)
+library("xts")
+library("data.table")
 context("autoSelectExchangeTrades")
 test_that("autoSelectExchangeTrades", {
   expect_equal(
@@ -113,7 +114,6 @@ test_that("tradesCleanup on-disk functionality", {
   if(Sys.getenv("USERNAME") != "emil"){
     skip("Skipped to not mess with other people's files")
   }
-  library(data.table)
   DT <- SYMBOL <- NULL
   trades2 <- sampleTDataRawMicroseconds
   quotes2 <- sampleQDataRawMicroseconds

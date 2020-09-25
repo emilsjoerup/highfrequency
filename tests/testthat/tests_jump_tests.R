@@ -1,5 +1,5 @@
-library(testthat)
-library(highfrequency)
+library("testthat")
+library("highfrequency")
 
 context("AJjumpTest unit test")
 test_that("AJjumpTest unit test",{
