@@ -550,8 +550,9 @@ rAVGCov <- function(rData, cor = FALSE, alignBy = "minutes", alignPeriod = 5, k 
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, lapply(.SD, as.numeric), .SDcols = colnames(rData)])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rAVGCov(as.matrix(rData[starts[i]:ends[i], lapply(.SD, as.numeric), .SDcols = colnames(rData)]), cor = cor, makeReturns = makeReturns, alignBy = alignBy, alignPeriod = alignPeriod, k = k)
+      res[[dates[i]]] <- rAVGCov(dat[starts[i]:ends[i],], cor = cor, makeReturns = makeReturns, alignBy = alignBy, alignPeriod = alignPeriod, k = k)
     }
     
     
@@ -987,8 +988,9 @@ rBPCov <- function(rData, cor = FALSE, alignBy = NULL, alignPeriod = NULL, makeR
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rBPCov(as.matrix(rData[starts[i]:ends[i], !"DT"]), cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rBPCov(dat[starts[i]:ends[i],], cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     
     if(ncol(rData) == 2){ ## Univariate case
@@ -1127,8 +1129,9 @@ rCov <- function(rData, cor = FALSE, alignBy = NULL, alignPeriod = NULL, makeRet
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rCov(as.matrix(rData[starts[i]:ends[i], !"DT"]), cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rCov(dat[starts[i]:ends[i], ], cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     
     if(length(res[[1]]) == 1){ ## Univariate case
@@ -1142,7 +1145,7 @@ rCov <- function(rData, cor = FALSE, alignBy = NULL, alignPeriod = NULL, makeRet
     if((!is.null(alignBy)) && (!is.null(alignPeriod))) {
       rData <- fastTickAgregation(rData, on = alignBy, k = alignPeriod)
     } 
-    if (makeReturns) {  
+    if (makeReturns) {
       rData <- makeReturns(rData) 
     }  
     if (is.null(dim(rData))) {  
@@ -1343,8 +1346,9 @@ rKernelCov <- function(rData, cor = FALSE,  alignBy = "seconds", alignPeriod = 1
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rKernelCov(as.matrix(rData[starts[i]:ends[i], !"DT"]), cor = cor, alignBy = NULL, alignPeriod = NULL, makeReturns = makeReturns,
+      res[[dates[i]]] <- rKernelCov(dat[starts[i]:ends[i],], cor = cor, alignBy = NULL, alignPeriod = NULL, makeReturns = makeReturns,
                                     kernelType = kernelType, kernelParam = kernelParam, kernelDOFadj = kernelDOFadj)
     }
     
@@ -1812,8 +1816,9 @@ rSkew <- function(rData, alignBy = NULL, alignPeriod = NULL, makeReturns = FALSE
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rSkew(as.matrix(rData[starts[i]:ends[i], !"DT"]), makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rSkew(dat[starts[i]:ends[i],], makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     
     res <- setDT(transpose(res))[, DT := dates]
@@ -1903,8 +1908,9 @@ rSV <- function(rData, alignBy = NULL, alignPeriod = NULL, makeReturns = FALSE, 
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rSV(as.matrix(rData[starts[i]:ends[i], !"DT"]), makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rSV(dat[starts[i]:ends[i], ], makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     # res <- setDT(transpose(res))[, DT := dates]
     # setcolorder(res, "DT")
@@ -2011,8 +2017,9 @@ rThresholdCov <- function(rData, cor = FALSE, alignBy = NULL, alignPeriod = NULL
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rThresholdCov(as.matrix(rData[starts[i]:ends[i], !"DT"]), cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rThresholdCov(dat[starts[i]:ends[i],], cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     
     if(length(res[[1]]) == 1){ ## Univariate case
@@ -2289,8 +2296,9 @@ rTPVar <- function(rData, alignBy = NULL, alignPeriod = NULL, makeReturns = FALS
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rTPVar(as.matrix(rData[starts[i]:ends[i], !"DT"]), makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rTPVar(dat[starts[i]:ends[i],], makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     res <- setDT(transpose(res))[, DT := dates]
     setcolorder(res, "DT")
@@ -2373,8 +2381,9 @@ rQPVar <- function(rData, alignBy = NULL, alignPeriod = NULL, makeReturns = FALS
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rQPVar(as.matrix(rData[starts[i]:ends[i], !"DT"]), makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rQPVar(dat[starts[i]:ends[i], ], makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     res <- setDT(transpose(res))[, DT := dates]
     setcolorder(res, "DT")
@@ -2441,8 +2450,9 @@ rQuar <- function(rData, alignBy = NULL, alignPeriod = NULL, makeReturns = FALSE
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rQuar(as.matrix(rData[starts[i]:ends[i], !"DT"]), makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rQuar(dat[starts[i]:ends[i],], makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     res <- setDT(transpose(res))[, DT := dates]
     setcolorder(res, "DT")
@@ -2866,8 +2876,9 @@ rSemiCov <- function(rData, cor = FALSE, alignBy = NULL, alignPeriod = NULL, mak
     starts <- dates$start
     ends <- dates$end
     dates <- dates$DATE
+    dat <- as.matrix(rData[, !"DT"])
     for (i in 1:length(dates)) {
-      res[[dates[i]]] <- rSemiCov(as.matrix(rData[starts[i]:ends[i], !"DT"]), cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
+      res[[dates[i]]] <- rSemiCov(dat[starts[i]:ends[i],], cor = cor, makeReturns = makeReturns, alignBy = NULL, alignPeriod = NULL)
     }
     
     return(res)
